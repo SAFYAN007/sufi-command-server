@@ -3,7 +3,7 @@ import App from './modules/app.js';
 import './modules/drupalModuleInfo.js';
 import './modules/selection.js';
 import './modules/imgAnchorModal.js';
-import css from "./style.css";
+import  "./style.css";
 
 window.sweetalert2 = window.Swal = window.sweetAlert = sweetalert2;
 //run app

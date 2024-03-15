@@ -1,27 +1,25 @@
 import { addCommand } from '../commands.js';
 
 
-addCommand("testSwal", function ({reOpenMain}) {
-    let url =
-        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
-        window.location.href;
+addCommand("Get public IP", function ({ reOpenMain }) {
     Swal.fire({
-        html: `<iframe class="sufi-frame" src="${url}" />`,
-        didDestroy: reOpenMain,
+        title: 'Your public IP',
+        text: "Wait fetching"
     });
+    $.get('https://api.ipify.org?format=json')
+        .done(function (data) {
+            Swal.fire({
+                icon: "info",
+                title: 'Your public IP',
+                text: "Your IP " + data.ip
+            });
+        });
 });
 
-addCommand("Website Qr", function ({reOpenMain}) {
-    let url =
-        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
-        window.location.href;
-    Swal.fire({
-        html: `<iframe class="sufi-frame" src="${url}" />`,
-        // didDestroy: reOpenMain,
-    });
-});
 
-addCommand("FindEmail", function ({reOpenMain}) {
+
+
+addCommand("FindEmail", function ({ reOpenMain }) {
     function scrapeEmails() {
         let pageContent = document.body.innerHTML;
         let emailPattern = /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/gi;
@@ -32,8 +30,8 @@ addCommand("FindEmail", function ({reOpenMain}) {
         });
     }
     scrapeEmails();
-});
-addCommand("FinedPhoneNumber", function ({reOpenMain}) {
+}, "Find");
+addCommand("FinedPhoneNumber", function ({ reOpenMain }) {
     function FindPhoneNumberCommand() {
         var phoneNumberPattern = /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/g;
 
@@ -46,21 +44,11 @@ addCommand("FinedPhoneNumber", function ({reOpenMain}) {
         });
     }
     FindPhoneNumberCommand();
-});
+}, "Find");
 
-addCommand("ShortURL", function ({reOpenMain}) {
-    function ShortURLCommand() {
-        var shortURLPattern = /https?:\/\/[^\s]+/gi;
-        var pageContent = document.body.innerHTML;
-        var shortURLs = pageContent.match(shortURLPattern);
-        Swal.fire({
-            html: `<textarea>${shortURLs.join("\n")}</textarea>`,
-            // didDestroy: reOpenMain
-        });
-    }
-    ShortURLCommand();
-});
-addCommand("SpellChEker", function ({reOpenMain}) {
+
+
+addCommand("SpellChEker", function ({ reOpenMain }) {
     function SpellCheckerCommand() {
         var corrections = {
             spel: "spell",
@@ -101,9 +89,9 @@ addCommand("SpellChEker", function ({reOpenMain}) {
     }
 
     SpellCheckerCommand();
-});
+}, "Check");
 
-addCommand("SSandPDfCovert", function ({reOpenMain}) {
+addCommand("SSandPDfCovert", function ({ reOpenMain }) {
     function SSandPDfCovert() {
         document.addEventListener("DOMContentLoaded", function () {
             var modalLinks = document.querySelectorAll(".modal-link");
@@ -145,12 +133,12 @@ addCommand("SSandPDfCovert", function ({reOpenMain}) {
     }
 
     SSandPDfCovert();
-});
-addCommand("FontFamily", function ({reOpenMain}) { });
-addCommand("CheckBrokenLinks", function ({reOpenMain}) { });
-addCommand("CollectLinks", function ({reOpenMain}) { });
+}, "Convert");
+addCommand("FontFamily", function ({ reOpenMain }) { }, "Get Info");
+addCommand("CheckBrokenLinks", function ({ reOpenMain }) { }, "Get Info");
+addCommand("CollectLinks", function ({ reOpenMain }) { }, "Get Info");
 
-addCommand("Metatags", function ({reOpenMain}) {
+addCommand("Metatags", function ({ reOpenMain }) {
     function metaTagsCommand() {
         let metaTags = document.querySelectorAll("meta");
 
@@ -172,10 +160,12 @@ addCommand("Metatags", function ({reOpenMain}) {
     }
 
     addCommand("Metatags", metaTagsCommand);
-});
-addCommand("Check seo site:", function ({reOpenMain}) {
+}, "Get Info");
+addCommand("Check seo site:", function ({ reOpenMain }) {
     window.open("https://www.google.com/search?q=site:" + window.location.href);
-});
-addCommand("Way back", function ({reOpenMain}) {
+}, "Check");
+
+
+addCommand("Way back", function ({ reOpenMain }) {
     window.open("https://web.archive.org/web/*/" + window.location.href);
-});
+}, "Check");

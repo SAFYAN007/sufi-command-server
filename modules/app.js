@@ -1,4 +1,5 @@
 import './commands/all.js';
+import './commands/share.js';
 import './commands/links.js';
 
 import { sufiCommands, addCommand } from './commands.js';
@@ -69,21 +70,29 @@ export default function App() {
 
   function updateCommandPallete() {
     achorContainer.innerHTML = "";
-    for (let sufiCommandName in sufiCommands) {
-      let sufiCommand = sufiCommands[sufiCommandName];
-      let a = createElement(
-        `<sufi-command>${sufiCommand.title}</sufi-command>`
-      );
-      achorContainer.append(a);
-      a.addEventListener("mouseover", function () {
-        removeSufiActive();
-        this.classList.add("sufi-active");
-      });
+    for (let group in sufiCommands) {
 
-      a.addEventListener("click", function (evt) {
-        evt.preventDefault();
-        sufiCommand.fn({ reOpenMain });
-      });
+      let groupContainer = createElement(
+        `<sufi-command-group><sufi-command-group-title>${group}</sufi-command-group-title></sufi-command-group>`
+      );
+      achorContainer.append(groupContainer);
+
+      for (let sufiCommandName in sufiCommands[group]) {
+        let sufiCommand = sufiCommands[group][sufiCommandName];
+        let a = createElement(
+          `<sufi-command>${sufiCommand.title}</sufi-command>`
+        );
+        groupContainer.append(a);
+        a.addEventListener("mouseover", function () {
+          removeSufiActive();
+          this.classList.add("sufi-active");
+        });
+
+        a.addEventListener("click", function (evt) {
+          evt.preventDefault();
+          sufiCommand.fn({ reOpenMain });
+        });
+      }
     }
   }
 
@@ -117,6 +126,26 @@ export default function App() {
         item.classList.add("sufi-hidden");
       }
     });
+
+    //hide groups
+    document.querySelectorAll("sufi-command-group").forEach(function (groupContainer) {
+      let visibleChilds = groupContainer.querySelectorAll("sufi-command:not(.sufi-hidden)");
+      if (visibleChilds.length > 0) {
+        groupContainer.classList.remove("sufi-hidden");
+      } else {
+        groupContainer.classList.add("sufi-hidden");
+      }
+    });
+
+    let visibleGroups = document.querySelectorAll("sufi-command-group:not(.sufi-hidden)");
+    document.querySelectorAll("sufi-no-result").forEach(e => e.remove());
+
+    if (visibleGroups.length == 0) {
+      achorContainer.append(createElement("<sufi-no-result>No results</sufi-no-result>"));
+    }
+
+
+
   }
 
   function createElement(markup) {
