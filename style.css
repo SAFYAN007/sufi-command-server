@@ -1,6 +1,9 @@
-a{
+a {
   background-color: green;
   color: white;
+}
+* {
+  outline: 1px solid red;
 }
 sufi-app,
 sufi-container,
@@ -11,7 +14,7 @@ sufi-command {
   display: block;
 }
 
-.sufi-frame{
+.sufi-frame {
   border: none;
 }
 
@@ -39,10 +42,9 @@ sufi-button {
   z-index: 100000000;
 }
 
-sufi-button svg{
+sufi-button svg {
   width: 30px;
 }
-
 
 sufi-input {
   border-bottom: 1px solid grey;
@@ -55,7 +57,6 @@ sufi-input input {
   padding: 10px;
   width: 100%;
 }
-
 
 .sufi-active {
   display: block;
@@ -83,19 +84,17 @@ sufi-anchors sufi-command {
   margin: 2px 10px;
   padding: 5px 5px;
   cursor: pointer;
-  transition: all linear .1s;
+  transition: all linear 0.1s;
 }
 
 sufi-anchors sufi-command span {
   color: red;
 }
 
-
 sufi-anchors sufi-command.sufi-active {
   padding-left: 10px;
   background-color: #fff0db;
 }
-
 
 .sufi-hidden {
   display: none;
